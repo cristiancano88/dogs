@@ -22,11 +22,11 @@ export class AppComponent implements OnInit {
   imagesOfBreed: string[] = [];
 
   constructor(
-    private _dogsService: BreedService,
+    private _breedService: BreedService,
   ) {}
 
   ngOnInit(): void {
-    this._dogsService.getBreeds().subscribe((dogs: string[]) => {
+    this._breedService.getBreeds().subscribe((dogs: string[]) => {
       this.breeds = dogs;
     });
 
@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
   }
 
   selectBreed(breed: string): void {
-    this._dogsService
+    this._breedService
       .getImagesOfBreed(breed)
       .subscribe((imagesOfBreed: string[]) => {
         this.selectedBreed = breed;
