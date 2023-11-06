@@ -26,14 +26,18 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this._breedService.getBreeds().subscribe((dogs: string[]) => {
-      this.breeds = dogs;
-    });
+    this._getBreeds();
 
     this.filteredOptions = this.searchControl.valueChanges.pipe(
       startWith(''),
       map((value) => this._filter(value || ''))
     );
+  }
+
+  private _getBreeds(): void {
+    this._breedService.getBreeds().subscribe((dogs: string[]) => {
+      this.breeds = dogs;
+    });
   }
 
   private _filter(value: string): string[] {
