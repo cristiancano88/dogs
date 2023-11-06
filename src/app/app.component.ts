@@ -21,6 +21,8 @@ export class AppComponent implements OnInit {
 
   imagesOfBreed: string[] = [];
 
+  accordianItemOpened: number = 1;
+
   constructor(
     private _breedService: BreedService,
   ) {}
@@ -68,5 +70,9 @@ export class AppComponent implements OnInit {
       });
     }
     return relatedBreeds;
+  }
+
+  toggleAccordianItem(item: number): void {
+    this.accordianItemOpened = item;
   }
 }

@@ -1,57 +1,164 @@
-<header class="bg-dark text-white p-4">
+<section class="main-section bg-light pt-4">
   <div class="container">
-    <h1>Select a breed</h1>
+    <div class="row">
+      <div class="col-lg-6 order-md-last mt-4">
+        <div
+          class="d-flex align-self-stretch align-items-center justify-content-center justify-content-md-center mb-4 mb-sm-0"
+        >
+          <img
+            class="main-image"
+            src="https://themewagon.github.io/petsitting/images/img.jpg"
+            alt="dog"
+          />
+        </div>
+      </div>
 
-    <form class="d-flex">
-      <mat-form-field class="form-control me-2">
-        <mat-label>Breeds</mat-label>
-        <input
-          type="text"
-          placeholder="Pick one"
-          matInput
-          [formControl]="searchControl"
-          [matAutocomplete]="auto"
-        />
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option
-            *ngFor="let breed of filteredOptions | async"
-            [value]="breed"
-            (click)="selectBreed(breed)"
-          >
-            {{ breed }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-    </form>
-  </div>
-</header>
+      <div class="col-lg-6">
+        <div class="heading-section mb-5 mt-5 mt-lg-0">
+          <h2 class="mb-3">Adopt a dog</h2>
+          <p>We help you to find your next pet.</p>
+        </div>
+        <div
+          id="accordion"
+          class="myaccordion w-100"
+          aria-multiselectable="true"
+        >
+          <form class="d-flex mb-3">
+            <mat-form-field class="form-control me-2">
+              <mat-label>Breeds</mat-label>
+              <input
+                type="text"
+                placeholder="Pick one"
+                matInput
+                [formControl]="searchControl"
+                [matAutocomplete]="auto"
+              />
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option
+                  *ngFor="let breed of filteredOptions | async"
+                  [value]="breed"
+                  (click)="selectBreed(breed)"
+                >
+                  {{ breed }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </form>
 
-<main class="container mt-4" *ngIf="selectedBreed">
-  <div class="mb-4">
-    <span class="fw-bold">Selected Breed:</span>
-    <p class="fw-bold fs-1 text-capitalize mt-2 text-success">
-      {{ selectedBreed }}
-    </p>
-  </div>
+          <cdk-accordion class="breed-accordion" *ngIf="selectedBreed">
+            <cdk-accordion-item
+              #accordionItem="cdkAccordionItem"
+              class="breed-accordion-item"
+              role="button"
+              tabindex="0"
+              [attr.id]="'accordion-header-1'"
+              [attr.aria-expanded]="accordianItemOpened"
+              [attr.aria-controls]="'accordion-body-1'"
+            >
+              <div
+                class="breed-accordion-item-header"
+                (click)="toggleAccordianItem(1)"
+              >
+                Images
+                <span class="breed-accordion-item-description">
+                  Click to {{ accordianItemOpened === 1 ? "close" : "open" }}
+                </span>
+              </div>
+              <div
+                class="breed-accordion-item-body"
+                role="region"
+                [style.display]="accordianItemOpened === 1 ? '' : 'none'"
+                [attr.id]="'accordion-body-1'"
+                [attr.aria-labelledby]="'accordion-header-1'"
+              >
+                <div class="row">
+                  <div
+                    class="col-md-4 d-flex justify-content-center"
+                    *ngFor="let imageBreed of imagesOfBreed"
+                  >
+                    <mat-card class="breed-card">
+                      <img
+                        mat-card-image
+                        src="{{ imageBreed }}"
+                        alt="{{ selectedBreed }}"
+                      />
+                    </mat-card>
+                  </div>
+                </div>
+              </div>
+            </cdk-accordion-item>
 
-  <div class="row">
-    <div
-      class="col-md-3 col-sm-1 d-flex justify-content-center"
-      *ngFor="let imageBreed of imagesOfBreed"
-    >
-      <mat-card class="breed-card">
-        <img mat-card-image src="{{ imageBreed }}" alt="{{ selectedBreed }}" />
-      </mat-card>
+            <cdk-accordion-item
+              #accordionItem="cdkAccordionItem"
+              class="breed-accordion-item"
+              role="button"
+              tabindex="1"
+              [attr.id]="'accordion-header-2'"
+              [attr.aria-expanded]="accordionItem.expanded"
+              [attr.aria-controls]="'accordion-body-2'"
+            >
+              <div
+                class="breed-accordion-item-header"
+                (click)="toggleAccordianItem(2)"
+              >
+                Care
+                <span class="breed-accordion-item-description">
+                  Click to {{ accordianItemOpened === 2 ? "close" : "open" }}
+                </span>
+              </div>
+              <div
+                class="breed-accordion-item-body"
+                role="region"
+                [style.display]="accordianItemOpened === 2 ? '' : 'none'"
+                [attr.id]="'accordion-body-2'"
+                [attr.aria-labelledby]="'accordion-header-2'"
+              >
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                Perferendis excepturi incidunt ipsum deleniti labore, tempore
+                non nam doloribus blanditiis veritatis illo autem iure aliquid
+                ullam rem tenetur deserunt velit culpa?
+              </div>
+            </cdk-accordion-item>
+
+            <cdk-accordion-item
+              #accordionItem="cdkAccordionItem"
+              class="breed-accordion-item"
+              role="button"
+              tabindex="2"
+              [attr.id]="'accordion-header-3'"
+              [attr.aria-expanded]="accordionItem.expanded"
+              [attr.aria-controls]="'accordion-body-3'"
+            >
+              <div
+                class="breed-accordion-item-header"
+                (click)="toggleAccordianItem(3)"
+              >
+                Related breeds
+                <span class="breed-accordion-item-description">
+                  Click to {{ accordianItemOpened === 3 ? "close" : "open" }}
+                </span>
+              </div>
+              <div
+                class="breed-accordion-item-body"
+                role="region"
+                [style.display]="accordianItemOpened === 3 ? '' : 'none'"
+                [attr.id]="'accordion-body-3'"
+                [attr.aria-labelledby]="'accordion-header-3'"
+              >
+                <mat-list role="list">
+                  <mat-list-item
+                    role="listitem"
+                    *ngFor="let breed of relatedBreeds"
+                  >
+                    <mat-icon matListItemIcon>pets</mat-icon>
+                    <div matListItemTitle>{{ breed }}</div>
+                  </mat-list-item>
+                </mat-list>
+              </div>
+            </cdk-accordion-item>
+          </cdk-accordion>
+        </div>
+      </div>
     </div>
   </div>
-
-  <div class="mt-5">
-    <span class="fw-bold" *ngIf="relatedBreeds.length">Releted Breeds</span>
-    <mat-list role="list">
-      <mat-list-item role="listitem" *ngFor="let breed of relatedBreeds">
-        <mat-icon matListItemIcon>pets</mat-icon>
-        <div matListItemTitle>{{ breed }}</div>
-      </mat-list-item>
-    </mat-list>
-  </div>
-</main>
+</section>

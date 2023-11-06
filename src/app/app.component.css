@@ -1,3 +1,57 @@
+.main-section {
+    height: 100%;
+}
+
+.main-image {
+    height: 600px;
+    width: auto;
+}
+
 .breed-card {
     max-width: 250px;
+}
+
+.breed-accordion {
+    display: block;
+    max-width: 630px;
+}
+
+.breed-accordion-item {
+    display: block;
+    border: solid 1px #ccc;
+}
+
+.breed-accordion-item + .breed-accordion-item {
+    border-top: none;
+}
+
+.breed-accordion-item-header {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+}
+
+.breed-accordion-item-description {
+    font-size: 0.85em;
+    color: #999;
+}
+
+.breed-accordion-item-header,
+.breed-accordion-item-body {
+    padding: 16px;
+}
+
+.breed-accordion-item-header:hover {
+    cursor: pointer;
+    background-color: #eee;
+}
+
+.breed-accordion-item:first-child {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.breed-accordion-item:last-child {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
 }
