@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  dogUrl: 'https://dog.ceo/api/breeds'
+  dogUrl: 'https://dog.ceo/api'
 };
 
 /*

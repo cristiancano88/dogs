@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DogService } from './shared/services/dog.service';
+import { BreedService } from './shared/services/breed.service';
+import { Observable, map, startWith } from 'rxjs';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -7,15 +9,60 @@ import { DogService } from './shared/services/dog.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  title = 'dogs';
+  breeds: string[] = [];
 
-  constructor(private dogsService: DogService) {}
+  selectedBreed: string = '';
+
+  relatedBreeds: string[] = [];
+
+  searchControl = new FormControl('');
+
+  filteredOptions: Observable<string[]> | null = null;
+
+  imagesOfBreed: string[] = [];
+
+  constructor(
+    private _dogsService: BreedService,
+  ) {}
 
   ngOnInit(): void {
-    this.dogsService.getDogs().subscribe((dogs) => {
-      console.log(dogs);
+    this._dogsService.getBreeds().subscribe((dogs: string[]) => {
+      this.breeds = dogs;
     });
+
+    this.filteredOptions = this.searchControl.valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value || ''))
+    );
   }
 
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.breeds.filter((dog: string) =>
+      dog.toLowerCase().includes(filterValue)
+    );
+  }
 
+  selectBreed(breed: string): void {
+    this._dogsService
+      .getImagesOfBreed(breed)
+      .subscribe((imagesOfBreed: string[]) => {
+        this.selectedBreed = breed;
+        this.imagesOfBreed = imagesOfBreed;
+        this.relatedBreeds = this._getRelatedBreeds();
+      });
+  }
+
+  private _getRelatedBreeds(): string[] {
+    const relatedBreeds: string[] = [];
+    const breedSplit = this.selectedBreed.split(' ');
+    if (breedSplit.length > 0) {
+      this.breeds.forEach((breed: string) => {
+        if (breed.startsWith(breedSplit[0]) && breed !== this.selectedBreed) {
+          relatedBreeds.push(breed);
+        }
+      });
+    }
+    return relatedBreeds;
+  }
 }
